@@ -14,3 +14,5 @@ select_and_run_history.c
 
     тот же смысл только для bash_history
 
+    Можно использовать совместно с программой screen или tmux
+
