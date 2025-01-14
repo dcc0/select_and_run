@@ -101,18 +101,22 @@
 			//Но мы знаем размер 20. char * - приведение к типу "указатель на строку"
 			p = (char * ) malloc(200);
 			strcpy(p, arr1[select - 1]);
-			printf("--- %s ---", p);
 			break;
 		  }
-		  //Раскрасим выход
-		  	if (select == 501 && select ==j+1) {
-			choice = select - 1;
-			printf("->[%s%s%s]\n", colored, arr1[select - 1], uncolored);
-		 }
+
 		  if (j != choice) printf("%d.[%s]\n", j+1, arr1[j]);
 		}
+
 	  }
-		printf("Выход: 501 \n");
+		  //Раскрасим выход
+		  	if (select == 501) {
+			choice = select - 1;
+			printf("->[%s Выход %s]\n", colored,  uncolored);
+		 } else {
+		   printf("Выход\n");
+		}
+
+		printf("Для выхода: 501 \n");
 		printf("Для сброса нажмите любую букву: s (например) \n");
 		printf("Для справки  добавьте ключ -h: select_and_run_history.comb -h\n");
 		printf("О программе: select_and_run_history.comb -a\n");
