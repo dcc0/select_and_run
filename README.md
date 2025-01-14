@@ -9,3 +9,8 @@
 /bin/ls
 
 Количество программ фиксированное: 30 шт.
+
+select_and_run_history.c
+
+    тот же смысл только для bash_history
+
