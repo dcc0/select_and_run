@@ -186,7 +186,7 @@ int main(void) {
 		run_program = print_select(select, p);
 		select=0;
 		//Освободим память
-		free(p);
+		//free(p);
 		}
 
 //Листаем вверх и добавляем опции
@@ -198,7 +198,7 @@ int main(void) {
 		run_program  = print_select(select, p);
 		select=0;
 		//Освободим память
-		free(p);
+		//free(p);
 		}
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -213,7 +213,7 @@ int main(void) {
       run_program = print_select(select, p);
       i++;
       //Освободим память
-      free(p);
+      //free(p);
     }
 
 
@@ -256,7 +256,7 @@ int main(void) {
     //Выполним программу
     //Проверим, что нажат Enter (\n) и то, что не выходим
     if (value == '\n' && select !=501) {
-      printf("%s", run_program);
+      printf("%s ", run_program);
 		system(run_program);
       //Чтобы остановить обновление
       //и показать результат программы
