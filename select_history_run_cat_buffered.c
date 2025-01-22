@@ -139,6 +139,8 @@ char * buffering (char arr1[500][200], int z_size ) {
   file = fopen(".bash_history", "r");
 
 while ((buffer1 = getc(file)) != EOF) {
+	if(z==500)
+	break;
     str[i] = buffer1;
 
     if (str[i] == '\n') {
