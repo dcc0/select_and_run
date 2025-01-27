@@ -259,7 +259,7 @@ if (input == KEY_C ) {
 	y=z;
 
 //Редактируем символ
-  if (input > 96 && input < 127 || input > 32 && input  < 67 ||  input > 68 && input  <  89 || input > 91 && input  < 96) {
+	  if (input > 96 && input < 127 || input > 31 && input  < 67 ||  input > 68 && input  <  89 || input > 91 && input  < 96) {
 
 	  system("clear");
 	 for (i=0; i <= z; i++) {
