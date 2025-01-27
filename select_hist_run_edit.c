@@ -100,7 +100,7 @@ if (select ==500) {
   printf("Для сброса нажмите  букву: s  \n");
   printf("Если трехзначное число, то нажатие s обнулит буфер!\n");
   printf("Перезагрузить файл .bash_history в буфер:  b  \n");
-  printf("Отредактировать команду:  e  \n");
+  printf("Быстрое редактирование команды(есть ограничения):  e. Отредактировать команду в vim: v \n");
   printf("Аргумент 1 при старте отключит буферизацию (файл .bash_history  будет читаться повторно)\n");
 
   /*Вернем название программы, которую надо выполнить*/
@@ -108,6 +108,7 @@ if (select ==500) {
     return p;
   return "1";
 }
+
 
 
 
@@ -180,9 +181,9 @@ char * edit_string(char * arr1) {
 	//char str[20] = "Edit thic string!";
 	set_keypress(); //Переключим в non-canonical
 	 system("clear");
-	 printf("Перемещение к символу стрелки, стереть Backspace\n");
-	 printf("Выполнить: Enter\n");
-	 printf("Есть ограничения на редактирование команды\n");
+	 printf("Перемещение к символу стрелки, стереть Backspace. Enter - выполнить\n");
+	 printf("Редактирование команды в vim: v \n");
+	  printf("Быстрое редактирование: e (ограничения на редактирование команды)\n");
 	 printf("Для выхода нажмите Esc\n");
 	 printf("%s", str); //Печатаем строку первый раз
 
@@ -260,7 +261,6 @@ if (input == KEY_C ) {
 
 //Редактируем символ
 	  if (input > 96 && input < 127 || input > 31 && input  < 67 ||  input > 68 && input  <  89 || input > 91 && input  < 96) {
-
 	  system("clear");
 	 for (i=0; i <= z; i++) {
 		 str[y]=value;
@@ -311,7 +311,8 @@ int main(int argc, char * argv[]) {
 	char const KEY_EXIT='`'; //Выход (`)
 	char const KEY_SPACE=' '; //Пробел
 	char const KEY_ENTER='\n'; //Enter
-	char const KEY_e = 'e';
+	char const KEY_e = 'e'; //Быстрое редактирование
+	char const KEY_v = 'v'; //Вызвать vim  для редактироваия
 ///////////////////////////////////////////////////////////////////////////////////
 
 //Массив хранит .bash_history
@@ -495,8 +496,18 @@ int main(int argc, char * argv[]) {
       buffering(arr1, 500);
       print_select(select, p, arr1, z);
     }
-
-	if (value == KEY_e) {
+//Редактирование команды в vim
+	if (value == KEY_v) {
+      char  ppp[50];
+      char str123[6] = "vi +";
+      char str1234[15] = " .bash_history ";
+      snprintf(ppp, 50, "%s%d%s", str123, select,  str1234);
+     system(ppp);
+     sleep(3);
+      value = KEY_SPACE;
+	}
+	//Быстрое редактирование
+	 if (value == KEY_e) {
       edit_string(run_program);
       system(edit_string(run_program));
       sleep(3);
@@ -511,4 +522,3 @@ int main(int argc, char * argv[]) {
   printf("\033[43m Выход \033[0m \n");
   return 0;
 }
-
