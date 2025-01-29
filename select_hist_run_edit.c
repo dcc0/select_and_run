@@ -118,7 +118,7 @@ if (select ==500) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-char * buffering (char arr1[500][200], int z_size ) {
+char * buffering (char *  argv_bash_history, char arr1[500][200], int z_size ) {
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -132,9 +132,9 @@ char * buffering (char arr1[500][200], int z_size ) {
   /*Количество вариантов*/
   int z = 0;
   int j = 0;
-  // Количество показываемых файлов. Массив. Буфер для .bash_history
 
-  file = fopen(".bash_history", "r");
+  // Количество показываемых файлов. Массив. Буфер для .bash_history
+  file = fopen(argv_bash_history, "r");
 
 while ((buffer1 = getc(file)) != EOF) {
 	if(z==500)
@@ -164,10 +164,10 @@ while ((buffer1 = getc(file)) != EOF) {
 }
 
 char * edit_string(char * arr1) {
+
 	//Стрелки
 	int  KEY_D = 68;
 	int  KEY_C = 67;
-
 	int  KEY_Backspace = 127;
 	int  KEY_space = 32;
 	int  KEY_backqote = 96;
@@ -183,7 +183,7 @@ char * edit_string(char * arr1) {
 	 system("clear");
 	 printf("Перемещение к символу стрелки, стереть Backspace. Enter - выполнить\n");
 	 printf("Редактирование команды в vim: v \n");
-	  printf("Быстрое редактирование: e (ограничения на редактирование команды)\n");
+	 printf("Быстрое редактирование: e (ограничения на редактирование команды)\n");
 	 printf("Для выхода нажмите Esc\n");
 	 printf("%s", str); //Печатаем строку первый раз
 
@@ -297,7 +297,34 @@ return str;
                   ////////////////////////////////////ФУНКЦИЯ//////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char * argv[]) {
+  FILE * file;
+  if (argc <= 2) {
+   file = fopen(".bash_history", "r") ;
+//Проверим файл .bash_history
+  char  str_error[200]="Не найден файл .bash_history. Программу следует запускать из директории пользователя\n";
+  char  str_error1[200]="Если запускаете программу не из директории пользователя, следует задать путь к .bash_history, так: \n";
+  char  str_error2[200]="select-history-comb.comb 1 <путь к .bash_history>: \n";
+  if  (file==NULL) {
+	  printf("%s", str_error);
+	  printf("%s", str_error1);
+	   printf("%s", str_error2);
+	  return 1;
+  } else {
+    fclose(file);
+}
+argv[2]=".bash_history";
+}
 
+if (argc > 2) {
+	 file = fopen(argv[2], "r") ;
+	   if  (file==NULL) {
+	  printf("Неправильно задан путь к .bash_history. Следует задавать абсолютный путь так: /home/user/.bash_history\n");
+	  return 1;
+	   } else {
+    fclose(file);
+}
+
+}
 	  ////////////////////////////////KEYS//////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////УПРАВЛЕНИЕ/////////////////////////////////////////
@@ -318,7 +345,7 @@ int main(int argc, char * argv[]) {
 //Массив хранит .bash_history
   char arr1[500][200];
 //Функция буферизации
-  buffering(arr1, 500);
+  buffering(argv[2],arr1, 500);
 //Размер массива - буфера
   int z = 500;
 
@@ -362,7 +389,7 @@ int main(int argc, char * argv[]) {
 	if (value  == KEY_b) {
 	value = KEY_SPACE;
 		//Перезагрузим буфер
-	buffering(arr1, 500);
+	  buffering(argv[2],arr1, 500);
 	run_program = print_select(select, p, arr1, 500);
 	select=0;
 	}
@@ -374,7 +401,7 @@ int main(int argc, char * argv[]) {
 		select=select+y;
 		//Читаем заново файл. Если нужна  однократная буферизация, то можно отключить/закомментировать
 		 if (argc > 1)
-		buffering(arr1, 500);
+		  buffering(argv[2],arr1, 500);
 		run_program = print_select(select, p, arr1, 500);
 		select=0;
 		}
@@ -385,7 +412,7 @@ int main(int argc, char * argv[]) {
 		select=select+y;
 		//Читаем заново файл. Если нужна  однократная буферизация, то можно отключить/закомментировать
 		  if (argc > 1)
-		buffering(arr1, 500);
+	  buffering(argv[2],arr1, 500);
 		run_program = print_select(select, p, arr1, 500);
 		select=0;
 		}
@@ -398,7 +425,7 @@ int main(int argc, char * argv[]) {
 		select=select+y;
 		//Читаем заново файл. Если нужна  однократная буферизация, то можно отключить/закомментировать
 		  if (argc > 1)
-		buffering(arr1, 500);
+  buffering(argv[2],arr1, 500);
 		run_program = print_select(select, p, arr1, 500);
 		select=0;
 		}
@@ -411,7 +438,7 @@ int main(int argc, char * argv[]) {
 		select=select+y;
 		//Читаем заново файл. Если нужна  однократная буферизация, то можно отключить/закомментировать
 		 if (argc > 1)
-		buffering(arr1, 500);
+	  buffering(argv[2],arr1, 500);
 		run_program = print_select(select, p, arr1, 500);
 		select=0;
 		}
@@ -427,7 +454,7 @@ int main(int argc, char * argv[]) {
       //Вызываем селектор с выбором
       //Читаем заново файл. Если нужна  однократная буферизация, то можно отключить/закомментировать
        if (argc > 1)
-      buffering(arr1, 500);
+      buffering(argv[2],arr1, 500);
       run_program = print_select(select, p, arr1, 500);
       i++;
       //Освободим память
@@ -462,7 +489,6 @@ int main(int argc, char * argv[]) {
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
-
     //Добавляем новое число в буфер
     if (buffer[i] > 0) {
 		//Чтобы не получить stack smashing
@@ -493,7 +519,7 @@ int main(int argc, char * argv[]) {
       select = 0;
       y = 0;
         if (argc > 1)
-      buffering(arr1, 500);
+      buffering(argv[2],arr1, 500);
       print_select(select, p, arr1, z);
     }
 //Редактирование команды в vim
