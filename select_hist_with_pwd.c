@@ -533,8 +533,8 @@ if (argc > 2) {
 	if (value == KEY_v) {
       char  ppp[50];
       char str123[6] = "vi +";
-      char str1234[15] = " .bash_history ";
-      snprintf(ppp, 50, "%s%d%s", str123, select,  str1234);
+      char str1234[15];
+      snprintf(ppp, 50, "%s%d %s", str123, select,  argv[2]);
      system(ppp);
      sleep(3);
       value = KEY_SPACE;
